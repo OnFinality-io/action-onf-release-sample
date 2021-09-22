@@ -1,4 +1,4 @@
-name: build & upload
+name: Update node image
 
 on:
   push:
