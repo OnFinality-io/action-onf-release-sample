@@ -12,11 +12,17 @@ jobs:
     name: Build
     strategy:
       matrix:
+        go-version: [1.15.x]
         #[macos,ubuntu, windows]
         os: [ubuntu]
         onf-version: [v0.1.0]
     runs-on:  ${{ matrix.os }}-latest
     steps:
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 100
+
     - name: version check
       uses: marceloprado/has-changed-path@v1
       id: version
@@ -34,10 +40,10 @@ jobs:
       with:
         onf-access-key: "${{ secrets.ONF_ACCESS_KEY }}"
         onf-secret-key: "${{ secrets.ONF_SECRET_KEY }}"
-        onf-workspace-id: 6729563711177248768
+        onf-workspace-id: "6729563711177248768"
         onf-network-key: 29153103-7641-400e-90aa-35b7ee1f30d5
-        onf-sub-command: image # node, image
-        onf-action: add # upgrade, add
+        onf-sub-command: node # node, image
+        onf-action: upgrade # upgrade, add
         image-version: ${{ steps.onf-version.outputs.text }}
         percent: 30
 
